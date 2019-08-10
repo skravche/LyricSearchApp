@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import './app.css';
 import Navbar from '../layout/Navbar';
 import Index from '../layout/Index';
 import Lyrics from '../tracks/Lyrics';
