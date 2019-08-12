@@ -4,6 +4,7 @@ import music_id from '../api';
 import Spinner from '../layout/Spinner';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
+import StarRatingComponent from 'react-star-rating-component';
 
 class Lyrics extends Component {
   state = {
@@ -19,7 +20,6 @@ class Lyrics extends Component {
         }&apikey=${music_id}`
       )
       .then(response => {
-        // console.log(response.data.message.body.lyrics.lyrics_body);
         this.setState({
           lyrics: response.data.message.body.lyrics.lyrics_body,
         });
@@ -39,22 +39,12 @@ class Lyrics extends Component {
 
   render() {
     const { track, lyrics } = this.state;
-    console.log(track);
-    console.log(lyrics);
-
-    // console.log(
-    //   track.primary_genres.music_genre_list[0].music_genre.music_genre_name
-    // );
 
     if (
-      // track === undefined ||
-      // lyrics === undefined ||
-      // Object.keys(track) === 0 ||
-      // Object.keys(lyrics) === 0
-      Object.entries(track).length === 0 &&
-      track.constructor === Object &&
-      Object.entries(lyrics).length === 0 &&
-      lyrics.constructor === Object
+      track === undefined ||
+      lyrics === undefined ||
+      Object.keys(track).length === 0 ||
+      Object.keys(lyrics).length === 0
     ) {
       return <Spinner />;
     } else {
@@ -68,34 +58,39 @@ class Lyrics extends Component {
               {track.track_name} by
               <span className="text-secondary"> {track.artist_name}</span>
             </h5>
-            <label>Lyrics:</label>
-            <br />
-            <p>{this.lyrics}</p>
-
+            <div class="card-body">
+              <h5 className="card-title">Lyrics:</h5>
+              <p className="card-text">{lyrics}</p>
+            </div>
             <ul className="list-group mt-3">
               <li className="list-group-item">
-                <strong>Album ID: {track.album_id}</strong>
-              </li>
-              {
-                <li className="list-group-item">
-                  <strong>Genre: </strong>
-                  {/* {
-                    track.primary_genres.music_genre_list[0].music_genre
-                      .music_genre_name
-                  }{' '} */}
-                </li>
-              }
-              <li className="list-group-item">
-                <strong>Explicit: </strong>
-                {track.explicit ? 'No' : 'Yes'}
+                <strong>Song Genre: </strong>
+                {track.primary_genres.music_genre_list.length === 0 ||
+                track.primary_genres.music_genre_list.length === undefined
+                  ? 'NO GENRE AVAILABLE'
+                  : track.primary_genres.music_genre_list[0].music_genre
+                      .music_genre_name}
               </li>
               <li className="list-group-item">
                 <strong>Release Data: </strong>
                 <Moment format="MM/DD/YYYY">{track.first_release_date}</Moment>
               </li>
               <li className="list-group-item">
-                <strong>Track Raiting: </strong>
-                {track.track_rating}
+                <div className="stars-box">
+                  <strong>Track Raiting: </strong>
+                  <StarRatingComponent
+                    className="stars"
+                    name="rate2"
+                    editing={false}
+                    renderStarIcon={() => <span>☆</span>}
+                    starCount={10}
+                    value={Math.floor(track.track_rating / 10)}
+                  />
+                </div>
+              </li>
+              <li className="list-group-item">
+                <strong>Album ID: </strong>
+                {track.album_id}
               </li>
             </ul>
           </div>
