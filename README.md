@@ -4,25 +4,23 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 > App that finds song lyrics using React and the Musixmatch API.
 
-## Musixmatch API
+### Musixmatch API
 
 Get your API here:
 
 [https://developer.musixmatch.com](https://developer.musixmatch.com)
 
-## Quick Start
+### Quick Start
 
-bash
-
-# Install dependencies
+#### Install dependencies
 
 npm install
 
-# Serve on localhost:3000
+#### Serve on localhost:3000
 
 npm start
 
-# Build for production
+#### Build for production
 
 npm run build
 
