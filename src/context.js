@@ -1,14 +1,26 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import music_id from './components/api';
-// const music_id = '773b612c98313de00ba0ce6e49068ed0';
 
 const Context = React.createContext();
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'SEARCH_TRACKS':
+      return {
+        ...state,
+        track_list: action.payload,
+        heading: 'Search Result',
+      };
+    default:
+      return state;
+  }
+};
 
 export class Provider extends Component {
   state = {
     track_list: [],
     heading: 'Top 10 Track',
+    dispatch: action => this.setState(state => reducer(state, action)),
   };
 
   componentDidMount() {
