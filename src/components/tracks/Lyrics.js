@@ -19,6 +19,7 @@ class Lyrics extends Component {
         }&apikey=${music_id}`
       )
       .then(response => {
+        // console.log(response.data.message.body.lyrics.lyrics_body);
         this.setState({
           lyrics: response.data.message.body.lyrics.lyrics_body,
         });
@@ -39,12 +40,21 @@ class Lyrics extends Component {
   render() {
     const { track, lyrics } = this.state;
     console.log(track);
+    console.log(lyrics);
+
+    // console.log(
+    //   track.primary_genres.music_genre_list[0].music_genre.music_genre_name
+    // );
 
     if (
-      track === undefined ||
-      lyrics === undefined ||
-      Object.keys(track) === 0 ||
-      Object.keys(lyrics) === 0
+      // track === undefined ||
+      // lyrics === undefined ||
+      // Object.keys(track) === 0 ||
+      // Object.keys(lyrics) === 0
+      Object.entries(track).length === 0 &&
+      track.constructor === Object &&
+      Object.entries(lyrics).length === 0 &&
+      lyrics.constructor === Object
     ) {
       return <Spinner />;
     } else {
@@ -58,7 +68,9 @@ class Lyrics extends Component {
               {track.track_name} by
               <span className="text-secondary"> {track.artist_name}</span>
             </h5>
-            <span>{lyrics.lyrics_body}</span>
+            <label>Lyrics:</label>
+            <br />
+            <p>{this.lyrics}</p>
 
             <ul className="list-group mt-3">
               <li className="list-group-item">
@@ -68,9 +80,9 @@ class Lyrics extends Component {
                 <li className="list-group-item">
                   <strong>Genre: </strong>
                   {/* {
-                    track.track.primary_genres.music_genre_list[0].music_genre
+                    track.primary_genres.music_genre_list[0].music_genre
                       .music_genre_name
-                  } */}
+                  }{' '} */}
                 </li>
               }
               <li className="list-group-item">
